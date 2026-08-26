@@ -1,0 +1,758 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dynatrace Job Support - Blog</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #f4f4f4;
+        }
+
+        /* Header */
+        header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 2rem 0;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 1rem;
+        }
+
+        .logo h1 {
+            font-size: 2rem;
+            font-weight: bold;
+        }
+
+        .tagline {
+            font-size: 0.95rem;
+            opacity: 0.95;
+        }
+
+        /* Navigation */
+        nav {
+            display: flex;
+            gap: 2rem;
+            margin-top: 1rem;
+            flex-wrap: wrap;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: opacity 0.3s;
+        }
+
+        nav a:hover {
+            opacity: 0.8;
+        }
+
+        /* Search Bar */
+        .search-container {
+            margin-top: 1.5rem;
+        }
+
+        .search-bar {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .search-bar input {
+            flex: 1;
+            padding: 0.75rem 1rem;
+            border: none;
+            border-radius: 4px;
+            font-size: 0.95rem;
+        }
+
+        .search-bar button {
+            padding: 0.75rem 1.5rem;
+            background-color: #667eea;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: background-color 0.3s;
+        }
+
+        .search-bar button:hover {
+            background-color: #764ba2;
+        }
+
+        /* Main Container */
+        .container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 20px;
+            display: grid;
+            grid-template-columns: 1fr 300px;
+            gap: 2rem;
+        }
+
+        /* Posts Section */
+        .posts-section {
+            background: white;
+            border-radius: 8px;
+            padding: 2rem;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+
+        .post {
+            padding: 1.5rem;
+            border-bottom: 1px solid #eee;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .post:hover {
+            transform: translateX(5px);
+            box-shadow: 0 2px 8px rgba(102, 126, 234, 0.1);
+        }
+
+        .post:last-child {
+            border-bottom: none;
+        }
+
+        .post-date {
+            color: #667eea;
+            font-size: 0.85rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            margin-bottom: 0.5rem;
+        }
+
+        .post-title {
+            font-size: 1.5rem;
+            color: #222;
+            margin-bottom: 0.75rem;
+            cursor: pointer;
+            transition: color 0.3s;
+        }
+
+        .post-title:hover {
+            color: #667eea;
+        }
+
+        .post-category {
+            display: inline-block;
+            background-color: #e8eaf6;
+            color: #667eea;
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            margin-bottom: 0.75rem;
+            font-weight: 600;
+        }
+
+        .post-excerpt {
+            color: #666;
+            margin-bottom: 1rem;
+            line-height: 1.7;
+        }
+
+        .read-more {
+            color: #667eea;
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.3s;
+        }
+
+        .read-more:hover {
+            color: #764ba2;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+
+        .sidebar-widget {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+
+        .sidebar-widget h3 {
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+            color: #222;
+            border-bottom: 2px solid #667eea;
+            padding-bottom: 0.5rem;
+        }
+
+        .contact-info {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .contact-info h3 {
+            border-bottom-color: rgba(255,255,255,0.3);
+            color: white;
+        }
+
+        .contact-item {
+            margin-bottom: 1rem;
+            font-size: 0.95rem;
+        }
+
+        .contact-item strong {
+            display: block;
+            margin-bottom: 0.25rem;
+        }
+
+        .phone-number {
+            font-size: 1.3rem;
+            font-weight: bold;
+            margin: 1rem 0;
+            text-decoration: none;
+            color: white;
+            display: inline-block;
+            padding: 0.5rem 0;
+        }
+
+        .phone-number:hover {
+            text-decoration: underline;
+        }
+
+        .categories {
+            list-style: none;
+        }
+
+        .categories li {
+            padding: 0.5rem 0;
+            border-bottom: 1px solid #eee;
+        }
+
+        .categories li:last-child {
+            border-bottom: none;
+        }
+
+        .categories a {
+            color: #667eea;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .categories a:hover {
+            color: #764ba2;
+        }
+
+        .category-badge {
+            background-color: #e8eaf6;
+            color: #667eea;
+            padding: 0.2rem 0.5rem;
+            border-radius: 3px;
+            font-size: 0.75rem;
+            float: right;
+        }
+
+        /* Footer */
+        footer {
+            background-color: #222;
+            color: white;
+            text-align: center;
+            padding: 2rem;
+            margin-top: 3rem;
+            font-size: 0.9rem;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            justify-items: start;
+            text-align: left;
+        }
+
+        .footer-section h4 {
+            margin-bottom: 1rem;
+        }
+
+        .footer-section a {
+            color: #ccc;
+            text-decoration: none;
+            display: block;
+            margin-bottom: 0.5rem;
+            transition: color 0.3s;
+        }
+
+        .footer-section a:hover {
+            color: #667eea;
+        }
+
+        .footer-bottom {
+            border-top: 1px solid #444;
+            margin-top: 2rem;
+            padding-top: 2rem;
+            text-align: center;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .container {
+                grid-template-columns: 1fr;
+            }
+
+            nav {
+                gap: 1rem;
+            }
+
+            .logo h1 {
+                font-size: 1.5rem;
+            }
+
+            .post-title {
+                font-size: 1.2rem;
+            }
+
+            .footer-content {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Modal for full post */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5);
+            animation: fadeIn 0.3s;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .modal-content {
+            background-color: white;
+            margin: 5% auto;
+            padding: 2rem;
+            border-radius: 8px;
+            width: 90%;
+            max-width: 700px;
+            max-height: 80vh;
+            overflow-y: auto;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+        }
+
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: color 0.3s;
+        }
+
+        .close:hover {
+            color: #000;
+        }
+
+        .modal-date {
+            color: #667eea;
+            font-size: 0.9rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            margin-bottom: 1rem;
+        }
+
+        .modal-title {
+            font-size: 2rem;
+            color: #222;
+            margin-bottom: 1.5rem;
+        }
+
+        .modal-body {
+            color: #555;
+            line-height: 1.8;
+            font-size: 1rem;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="header-content">
+            <div class="logo">
+                <h1>🚀 Dynatrace Support</h1>
+            </div>
+            <p class="tagline">Your Complete Job Support & Career Development Hub</p>
+            
+            <nav>
+                <a href="#home">Home</a>
+                <a href="#jobs">Job Support</a>
+                <a href="#tutorials">Tutorials</a>
+                <a href="#trainings">Trainings</a>
+                <a href="#contact">Contact</a>
+            </nav>
+
+            <div class="search-container">
+                <div class="search-bar">
+                    <input type="text" id="searchInput" placeholder="Search posts...">
+                    <button onclick="searchPosts()">Search</button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <div class="container">
+        <!-- Posts Section -->
+        <div class="posts-section">
+            <div id="postsList"></div>
+        </div>
+
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <!-- Contact Widget -->
+            <div class="sidebar-widget contact-info">
+                <h3>📞 Contact Us</h3>
+                <div class="contact-item">
+                    <strong>Support Team</strong>
+                    <a href="tel:+919060318644" class="phone-number">+91-9060318644</a>
+                </div>
+                <div class="contact-item">
+                    <strong>Available:</strong>
+                    Mon-Fri, 9AM-6PM IST
+                </div>
+                <div class="contact-item">
+                    <p>Get expert guidance for Dynatrace job preparation and technical support.</p>
+                </div>
+            </div>
+
+            <!-- Training Curriculum Widget -->
+            <div class="sidebar-widget">
+                <h3>📚 Dynatrace Complete Training Program</h3>
+                <div style="max-height: 600px; overflow-y: auto; font-size: 0.9rem;">
+                    <ul class="categories" style="list-style-type: none; padding: 0;">
+                        <li style="padding: 0.4rem 0; border-bottom: 1px solid #eee;">✓ Introduction to Observability & APM</li>
+                        <li style="padding: 0.4rem 0; border-bottom: 1px solid #eee;">✓ Dynatrace Architecture</li>
+                        <li style="padding: 0.4rem 0; border-bottom: 1px solid #eee;">✓ SaaS and Managed Deployments</li>
+                        <li style="padding: 0.4rem 0; border-bottom: 1px solid #eee;">✓ OneAgent Installation & Configuration</li>
+                        <li style="padding: 0.4rem 0; border-bottom: 1px solid #eee;">✓ ActiveGate Setup</li>
+                        <li style="padding: 0.4rem 0; border-bottom: 1px solid #eee;">✓ Host, Process & Service Monitoring</li>
+                        <li style="padding: 0.4rem 0; border-bottom: 1px solid #eee;">✓ Real User Monitoring (RUM)</li>
+                        <li style="padding: 0.4rem 0; border-bottom: 1px solid #eee;">✓ Synthetic Monitoring</li>
+                        <li style="padding: 0.4rem 0; border-bottom: 1px solid #eee;">✓ Infrastructure Monitoring</li>
+                        <li style="padding: 0.4rem 0; border-bottom: 1px solid #eee;">✓ Distributed Tracing & PurePath</li>
+                        <li style="padding: 0.4rem 0; border-bottom: 1px solid #eee;">✓ Davis AI Root Cause Analysis</li>
+                        <li style="padding: 0.4rem 0; border-bottom: 1px solid #eee;">✓ Log Monitoring</li>
+                        <li style="padding: 0.4rem 0; border-bottom: 1px solid #eee;">✓ Metrics & Custom Metrics</li>
+                        <li style="padding: 0.4rem 0; border-bottom: 1px solid #eee;">✓ Management Zones</li>
+                        <li style="padding: 0.4rem 0; border-bottom: 1px solid #eee;">✓ Alerting & Notifications</li>
+                        <li style="padding: 0.4rem 0; border-bottom: 1px solid #eee;">✓ Dashboards & Reporting</li>
+                        <li style="padding: 0.4rem 0; border-bottom: 1px solid #eee;">✓ DQL (Dynatrace Query Language)</li>
+                        <li style="padding: 0.4rem 0; border-bottom: 1px solid #eee;">✓ Grail Data Platform</li>
+                        <li style="padding: 0.4rem 0; border-bottom: 1px solid #eee;">✓ SLOs & SLIs</li>
+                        <li style="padding: 0.4rem 0; border-bottom: 1px solid #eee;">✓ Kubernetes & OpenShift Monitoring</li>
+                        <li style="padding: 0.4rem 0; border-bottom: 1px solid #eee;">✓ AWS, Azure & GCP Integrations</li>
+                        <li style="padding: 0.4rem 0; border-bottom: 1px solid #eee;">✓ ServiceNow Integration</li>
+                        <li style="padding: 0.4rem 0; border-bottom: 1px solid #eee;">✓ API Automation</li>
+                        <li style="padding: 0.4rem 0;">✓ Interview Preparation</li>
+                    </ul>
+                    <div style="margin-top: 1rem; padding-top: 1rem; border-top: 2px solid #667eea; text-align: center;">
+                        <strong style="color: #667eea;">Training inquiries:</strong><br>
+                        <a href="tel:+919060318644" style="color: #667eea; text-decoration: none; font-weight: bold;">+91-9060318644</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Categories Widget -->
+            <div class="sidebar-widget">
+                <h3>📁 Categories</h3>
+                <ul class="categories" id="categoriesList"></ul>
+            </div>
+
+            <!-- Recent Posts Widget -->
+            <div class="sidebar-widget">
+                <h3>📝 Recent Posts</h3>
+                <ul class="categories" id="recentPostsList"></ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h4>About</h4>
+                <a href="#about">About Dynatrace Support</a>
+                <a href="#mission">Our Mission</a>
+                <a href="#team">Meet Our Team</a>
+            </div>
+            <div class="footer-section">
+                <h4>Resources</h4>
+                <a href="#tutorials">Tutorials</a>
+                <a href="#faq">FAQ</a>
+                <a href="#docs">Documentation</a>
+            </div>
+            <div class="footer-section">
+                <h4>Support</h4>
+                <a href="#contact">Contact Us</a>
+                <a href="#feedback">Feedback</a>
+                <a href="#report">Report Issue</a>
+            </div>
+            <div class="footer-section">
+                <h4>Legal</h4>
+                <a href="#privacy">Privacy Policy</a>
+                <a href="#terms">Terms of Service</a>
+                <a href="#disclaimer">Disclaimer</a>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2024 Dynatrace Job Support. All rights reserved. | Helping you succeed in your Dynatrace career journey.</p>
+        </div>
+    </footer>
+
+    <!-- Modal for Full Post -->
+    <div id="postModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal()">&times;</span>
+            <div class="modal-date" id="modalDate"></div>
+            <h2 class="modal-title" id="modalTitle"></h2>
+            <div class="modal-body" id="modalBody"></div>
+        </div>
+    </div>
+
+    <script>
+        // Blog Posts Data
+        const posts = [
+            {
+                id: 1,
+                title: "Getting Started with Dynatrace: A Beginner's Guide",
+                date: "2024-01-15",
+                category: "Tutorial",
+                excerpt: "Learn the fundamentals of Dynatrace monitoring platform and how to set up your first application...",
+                content: "Dynatrace is a comprehensive application performance monitoring (APM) platform that helps you understand and optimize your applications. In this guide, we'll cover:\n\n1. What is Dynatrace?\n2. Installing Dynatrace Agent\n3. Configuring Your First Application\n4. Understanding Dashboards\n5. Creating Custom Metrics\n\nDynatrace provides real-time insights into application performance, user experience, and infrastructure health. Whether you're a developer, DevOps engineer, or system administrator, mastering Dynatrace will significantly boost your career prospects."
+            },
+            {
+                id: 2,
+                title: "Top Dynatrace Interview Questions 2024",
+                date: "2024-01-14",
+                category: "Interview Prep",
+                excerpt: "Master the most frequently asked Dynatrace questions in technical interviews...",
+                content: "Preparing for a Dynatrace-related interview? Here are the top questions you should know:\n\n1. What is Application Performance Monitoring (APM)?\n2. Explain the architecture of Dynatrace\n3. What are the different Dynatrace editions?\n4. How do you configure OneAgent?\n5. Explain PurePath Technology\n\nThese questions are commonly asked by companies like Amazon, Microsoft, and tech startups looking to hire APM specialists. Make sure to understand not just the answers but the concepts behind them."
+            },
+            {
+                id: 3,
+                title: "Mastering Dynatrace Dashboard Creation",
+                date: "2024-01-13",
+                category: "Advanced",
+                excerpt: "Create powerful custom dashboards to monitor your applications effectively...",
+                content: "Dashboards are the heart of monitoring. In this advanced tutorial, you'll learn to:\n\n• Create custom dashboards from scratch\n• Add various visualization types (charts, tables, gauges)\n• Configure alerting thresholds\n• Implement dashboard templates\n• Share dashboards with team members\n• Best practices for dashboard design\n\nA well-designed dashboard can save hours of troubleshooting and help teams respond quickly to issues."
+            },
+            {
+                id: 4,
+                title: "Dynatrace Job Opportunities in 2024",
+                date: "2024-01-12",
+                category: "Job Support",
+                excerpt: "Explore exciting career paths and job opportunities for Dynatrace professionals...",
+                content: "The demand for Dynatrace experts is skyrocketing! Here's what you need to know:\n\nJOB ROLES:\n✓ Dynatrace Administrator\n✓ APM Engineer\n✓ Solutions Architect\n✓ DevOps Engineer with Dynatrace expertise\n✓ Support Engineer\n\nSALARY RANGE (India):\n• Fresher: ₹4-6 LPA\n• 2-3 years: ₹6-10 LPA\n• 5+ years: ₹12-20 LPA\n\nTOP HIRING COMPANIES:\n• Accenture\n• TCS\n• Cognizant\n• Capgemini\n• Tech Startups (Flipkart, Amazon, etc.)\n\nContact us at +91-9100000000 for personalized job guidance!"
+            },
+            {
+                id: 5,
+                title: "Troubleshooting Common Dynatrace Issues",
+                date: "2024-01-11",
+                category: "Troubleshooting",
+                excerpt: "Learn how to diagnose and fix the most common Dynatrace problems...",
+                content: "Facing issues with Dynatrace? Here are solutions to common problems:\n\nISSUE 1: OneAgent Not Collecting Data\n→ Check if agent is installed correctly\n→ Verify firewall rules\n→ Check application logs\n\nISSUE 2: High Memory Usage\n→ Adjust agent sampling rates\n→ Review sensor settings\n→ Check PurePath configuration\n\nISSUE 3: Dashboard Not Showing Data\n→ Verify data collection is enabled\n→ Check API permissions\n→ Review environment configuration\n\nFor immediate support, contact us!"
+            },
+            {
+                id: 6,
+                title: "Building Your Dynatrace Career: A Roadmap",
+                date: "2024-01-10",
+                category: "Career Development",
+                excerpt: "A comprehensive guide to advancing your career in Dynatrace and APM technologies...",
+                content: "Here's your personalized roadmap to become a Dynatrace expert:\n\nMONTH 1-2: Foundations\n• Learn APM concepts\n• Understand Dynatrace basics\n• Set up lab environment\n\nMONTH 3-4: Intermediate Skills\n• Master OneAgent deployment\n• Configure monitoring rules\n• Create dashboards\n\nMONTH 5-6: Advanced Topics\n• Study PurePath technology\n• Learn API integration\n• Automation with scripts\n\nMONTH 7-8: Specialization\n• Focus on your niche (cloud, DevOps, etc.)\n• Get certified\n• Start freelancing or apply for jobs\n\nWith dedication, you can go from zero to hero in 8 months!"
+            },
+            {
+                id: 7,
+                title: "Dynatrace Foundation Training Course",
+                date: "2024-01-09",
+                category: "Training",
+                excerpt: "Complete online training program for Dynatrace beginners covering all fundamental concepts...",
+                content: "Our Dynatrace Foundation Training is designed for professionals new to APM and monitoring.\n\nCOURSE HIGHLIGHTS:\n✓ Duration: 4 Weeks (32 Hours)\n✓ Format: Online Live Classes + Recorded Sessions\n✓ Beginner Friendly: No prior experience needed\n✓ Hands-on Lab Environment: Practice with real scenarios\n✓ Certification: Course completion certificate\n\nMODULES COVERED:\n1. APM Fundamentals (4 hours)\n2. Dynatrace Architecture & Components (6 hours)\n3. OneAgent Installation & Configuration (6 hours)\n4. Dashboard & Alert Creation (6 hours)\n5. Troubleshooting & Best Practices (6 hours)\n6. Capstone Project (4 hours)\n\nCOURSE FEES: ₹8,999/-\nBATCH STARTS: Every Monday\nINSTRUCTOR: Certified Dynatrace Architects\n\nENROLL NOW: Call +91-9060318644"
+            },
+            {
+                id: 8,
+                title: "Advanced Dynatrace Certification Bootcamp",
+                date: "2024-01-08",
+                category: "Training",
+                excerpt: "Intensive training program to prepare for Dynatrace Certification exams...",
+                content: "Master Dynatrace and get certified with our Advanced Bootcamp!\n\nBOOTCAMP DETAILS:\n✓ Duration: 6 Weeks (48 Hours)\n✓ Level: Intermediate to Advanced\n✓ Format: Hybrid (Online + On-Demand)\n✓ Interview Preparation: Included\n✓ Job Assistance: Post-completion support\n\nTOPICS COVERED:\n• PurePath Technology Deep Dive\n• Advanced Dashboarding & Reporting\n• API Integration & Automation\n• Cloud Monitoring (AWS, Azure, GCP)\n• Performance Tuning & Optimization\n• Real-world Case Studies\n• Mock Interviews & Resume Building\n\nEXAM COVERAGE:\n→ Dynatrace Application Monitoring Professional\n→ Dynatrace Infrastructure Monitoring Professional\n→ Dynatrace Certified Associate\n\nFEES: ₹15,999/-\nSCHEDULE: Flexible (Weekends & Weekdays)\nPLACEMENT: 85% placement success rate\n\nRegister Now: +91-9060318644"
+            },
+            {
+                id: 9,
+                title: "Corporate Training Programs for Teams",
+                date: "2024-01-07",
+                category: "Training",
+                excerpt: "Customized training solutions for organizations and development teams...",
+                content: "Looking to upskill your entire team? We offer customized corporate training!\n\nCUSTOMIZED PROGRAMS:\n\n1. ONBOARDING PROGRAM\n   • Duration: 2-3 weeks\n   • For: New hires and team members\n   • Focus: Quick ramp-up to productivity\n\n2. ADVANCED SKILLS PROGRAM\n   • Duration: 4-6 weeks\n   • For: Experienced professionals\n   • Focus: Advanced concepts and best practices\n\n3. MIGRATION & IMPLEMENTATION\n   • Duration: Customized\n   • For: Teams migrating to Dynatrace\n   • Focus: Hands-on implementation support\n\nWHAT'S INCLUDED:\n✓ Dedicated Trainer for your team\n✓ Customized curriculum\n✓ Live lab environment setup\n✓ On-call support for 30 days\n✓ Performance assessment & reports\n✓ Certification exam vouchers\n✓ Post-training follow-up sessions\n\nCLIENTS WE SERVED:\n• TCS • Accenture • Cognizant • Capgemini • Wipro\n\nREQUEST DEMO: +91-9060318644"
+            },
+            {
+                id: 10,
+                title: "1-on-1 Mentorship & Coaching Sessions",
+                date: "2024-01-06",
+                category: "Training",
+                excerpt: "Personalized one-on-one coaching from experienced Dynatrace experts...",
+                content: "Get personalized guidance from Dynatrace experts through our 1-on-1 mentorship program!\n\nMENTORSHIP BENEFITS:\n✓ Custom learning path based on your goals\n✓ Real-world project guidance\n✓ Interview preparation\n✓ Career development coaching\n✓ Technical troubleshooting support\n✓ Resume & LinkedIn optimization\n\nSESSION TYPES:\n\n1. STARTER PACKAGE (3 Sessions)\n   • ₹2,999/- \n   • Perfect for beginners\n   • Duration: 1 hour each\n\n2. PROFESSIONAL PACKAGE (6 Sessions)\n   • ₹5,499/-\n   • For intermediate learners\n   • Priority support\n   • Duration: 1.5 hours each\n\n3. PREMIUM PACKAGE (12 Sessions)\n   • ₹9,999/-\n   • Unlimited email support\n   • Project collaboration\n   • Career guidance\n   • Duration: 2 hours each\n\nMENTORS:\n→ Senior Dynatrace Architects with 8+ years experience\n→ Certified trainers with track record\n→ Industry professionals from top companies\n\nBOOK YOUR SESSION: +91-9060318644"
+            }
+        ];
+
+        // Initialize blog
+        function initializeBlog() {
+            displayPosts(posts);
+            displayCategories();
+            displayRecentPosts();
+        }
+
+        // Display all posts
+        function displayPosts(postsToDisplay) {
+            const postsList = document.getElementById('postsList');
+            postsList.innerHTML = '';
+
+            if (postsToDisplay.length === 0) {
+                postsList.innerHTML = '<p style="text-align: center; color: #999; padding: 2rem;">No posts found. Try a different search.</p>';
+                return;
+            }
+
+            postsToDisplay.forEach(post => {
+                const postHTML = `
+                    <div class="post">
+                        <div class="post-date">${formatDate(post.date)}</div>
+                        <h2 class="post-title" onclick="openModal(${post.id})">${post.title}</h2>
+                        <span class="post-category">${post.category}</span>
+                        <p class="post-excerpt">${post.excerpt}</p>
+                        <a href="#" onclick="openModal(${post.id}); return false;" class="read-more">Read More →</a>
+                    </div>
+                `;
+                postsList.innerHTML += postHTML;
+            });
+        }
+
+        // Display categories
+        function displayCategories() {
+            const categoriesList = document.getElementById('categoriesList');
+            const categories = [...new Set(posts.map(p => p.category))];
+
+            categoriesList.innerHTML = categories.map(cat => {
+                const count = posts.filter(p => p.category === cat).length;
+                return `
+                    <li>
+                        <a href="#" onclick="filterByCategory('${cat}'); return false;">${cat}</a>
+                        <span class="category-badge">${count}</span>
+                    </li>
+                `;
+            }).join('');
+        }
+
+        // Display recent posts
+        function displayRecentPosts() {
+            const recentPostsList = document.getElementById('recentPostsList');
+            const recent = posts.slice(0, 4);
+
+            recentPostsList.innerHTML = recent.map(post => `
+                <li>
+                    <a href="#" onclick="openModal(${post.id}); return false;">${post.title}</a>
+                </li>
+            `).join('');
+        }
+
+        // Filter by category
+        function filterByCategory(category) {
+            const filtered = posts.filter(p => p.category === category);
+            displayPosts(filtered);
+        }
+
+        // Search posts
+        function searchPosts() {
+            const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+            const filtered = posts.filter(p =>
+                p.title.toLowerCase().includes(searchTerm) ||
+                p.excerpt.toLowerCase().includes(searchTerm) ||
+                p.category.toLowerCase().includes(searchTerm)
+            );
+            displayPosts(filtered);
+        }
+
+        // Search on Enter key
+        document.addEventListener('DOMContentLoaded', function() {
+            document.getElementById('searchInput').addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    searchPosts();
+                }
+            });
+        });
+
+        // Open modal
+        function openModal(postId) {
+            const post = posts.find(p => p.id === postId);
+            if (post) {
+                document.getElementById('modalDate').textContent = formatDate(post.date);
+                document.getElementById('modalTitle').textContent = post.title;
+                document.getElementById('modalBody').textContent = post.content;
+                document.getElementById('postModal').style.display = 'block';
+                document.body.style.overflow = 'hidden';
+            }
+        }
+
+        // Close modal
+        function closeModal() {
+            document.getElementById('postModal').style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }
+
+        // Format date
+        function formatDate(dateString) {
+            const options = { year: 'numeric', month: 'long', day: 'numeric' };
+            return new Date(dateString).toLocaleDateString('en-US', options);
+        }
+
+        // Close modal when clicking outside
+        window.onclick = function(event) {
+            const modal = document.getElementById('postModal');
+            if (event.target === modal) {
+                closeModal();
+            }
+        };
+
+        // Initialize on page load
+        window.addEventListener('load', initializeBlog);
+    </script>
+</body>
+</html>
