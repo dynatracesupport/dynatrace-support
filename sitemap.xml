@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+
+  <!-- Home page (the only real page/URL on the site today) -->
+  <url>
+    <loc>https://dynatracesupport.github.io/dynatrace-support/</loc>
+    <lastmod>2026-09-10</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+  </url>
+
+  <!--
+    When you create real, separate pages for each post/topic (recommended - see notes),
+    add one <url> block per page here, for example:
+
+    <url>
+      <loc>https://dynatracesupport.github.io/dynatrace-support/posts/getting-started-with-dynatrace.html</loc>
+      <lastmod>2026-09-10</lastmod>
+      <changefreq>monthly</changefreq>
+      <priority>0.8</priority>
+    </url>
+  -->
+
+</urlset>
